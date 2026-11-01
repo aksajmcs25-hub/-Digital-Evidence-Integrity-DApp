@@ -148,7 +148,7 @@ These tests demonstrate that even a small modification to a file produces a diff
 
 ## 10. Application Screenshot
 
-The screenshots contains the user interface of the Digital Evidence Integrity application.
+![Digital Evidence Integrity Dashboard](screenshots/DASHBOARD.png)
 
 
 

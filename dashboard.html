@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Evidence Integrity | Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Keep ethers.js v6 for the existing blockchain integration -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a href="index.html" class="brand">
+        <div class="brand-logo">D<span>◆</span></div>
+        <div>
+          <h2>Evidence<span>Chain</span></h2>
+          <p>INTEGRITY PLATFORM</p>
+        </div>
+      </a>
+
+      <div class="sidebar-label">WORKSPACE</div>
+
+      <nav class="side-nav">
+        <a href="#overview" class="nav-link active">
+          <span class="nav-icon">▦</span>
+          Overview
+        </a>
+        <a href="#register" class="nav-link">
+          <span class="nav-icon">＋</span>
+          Register Evidence
+        </a>
+        <a href="#verify" class="nav-link">
+          <span class="nav-icon">✓</span>
+          Verify Evidence
+        </a>
+        <a href="#network" class="nav-link">
+          <span class="nav-icon">◇</span>
+          Network
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-security-icon">⬡</div>
+        <h3>Evidence protected</h3>
+        <p>Blockchain-backed integrity checks on Sepolia testnet.</p>
+        <span class="security-pill">
+          <span class="pulse-dot"></span>
+          Testnet environment
+        </span>
+      </div>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div>
+          <p class="breadcrumb">WORKSPACE / <span>DASHBOARD</span></p>
+          <h1>Security Overview</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="network-badge">
+            <span class="network-dot"></span>
+            Sepolia Testnet
+          </div>
+
+          <button id="connectWallet" class="wallet-button" type="button">
+            <span class="wallet-symbol">◈</span>
+            Connect Wallet
+          </button>
+        </div>
+      </header>
+
+      <!-- OVERVIEW -->
+      <section id="overview" class="welcome-section">
+        <div class="welcome-copy">
+          <div class="eyebrow">
+            <span class="pulse-dot"></span>
+            BLOCKCHAIN EVIDENCE MANAGEMENT
+          </div>
+
+          <h2>Your evidence.<br><span>Your proof of integrity.</span></h2>
+
+          <p>
+            Register digital evidence on the blockchain and verify whether
+            a file matches its original cryptographic fingerprint.
+          </p>
+
+          <div class="welcome-actions">
+            <a href="#register" class="primary-button">＋ Register Evidence</a>
+            <a href="#verify" class="outline-button">Verify a File <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="hero-glow"></div>
+
+          <div class="hero-shield">
+            <div class="shield-inner">
+              <span class="shield-check">✓</span>
+            </div>
+          </div>
+
+          <div class="float-chip chip-top">
+            <span class="chip-icon">⌁</span>
+            <div><small>HASH ALGORITHM</small><strong>SHA-256</strong></div>
+          </div>
+
+          <div class="float-chip chip-bottom">
+            <span class="chip-icon green">✓</span>
+            <div><small>INTEGRITY LAYER</small><strong>Blockchain</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATISTICS -->
+      <section class="stats-grid" aria-label="Dashboard information">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon cyan">▤</span>
+            <span class="stat-label">EVIDENCE SYSTEM</span>
+          </div>
+          <h3>SHA-256</h3>
+          <p>Cryptographic file fingerprint</p>
+          <div class="stat-bottom"><span class="tiny-dot cyan-dot"></span> Hash-based identification</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon violet">⬡</span>
+            <span class="stat-label">BLOCKCHAIN</span>
+          </div>
+          <h3>Sepolia</h3>
+          <p>Ethereum test network</p>
+          <div class="stat-bottom"><span class="tiny-dot violet-dot"></span> Chain ID: 11155111</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon green">✓</span>
+            <span class="stat-label">VERIFICATION</span>
+          </div>
+          <h3>On-chain</h3>
+          <p>Check evidence against its registered hash</p>
+          <div class="stat-bottom"><span class="tiny-dot green-dot"></span> Contract-based verification</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon orange">⌘</span>
+            <span class="stat-label">WALLET</span>
+          </div>
+          <h3>MetaMask</h3>
+          <p id="walletAddress">Not connected</p>
+          <div class="stat-bottom"><span class="tiny-dot orange-dot"></span> Wallet connection</div>
+        </article>
+      </section>
+
+      <!-- WORKSPACE TITLE -->
+      <section class="workspace-heading">
+        <div>
+          <p class="section-kicker">EVIDENCE WORKSPACE</p>
+          <h2>Manage your digital evidence</h2>
+          <p class="section-description">Register a file or check the integrity of previously registered evidence.</p>
+        </div>
+        <div class="encrypted-badge"><span>⬡</span> Secure workflow</div>
+      </section>
+
+      <!-- REGISTER AND VERIFY -->
+      <section class="action-grid">
+
+        <!-- REGISTER CARD -->
+        <article id="register" class="glass-card action-card">
+          <div class="card-heading">
+            <div class="large-card-icon register-icon">＋</div>
+            <div>
+              <span class="card-label">STEP 01</span>
+              <h3>Register Evidence</h3>
+              <p>Create a blockchain record for your file hash.</p>
+            </div>
+          </div>
+
+          <div class="process-line">
+            <span class="process-number">1</span>
+            <div><strong>Select your file</strong><p>Choose the original evidence file from your device.</p></div>
+          </div>
+
+          <label class="upload-area" for="registerFile">
+            <span class="upload-icon">↑</span>
+            <strong>Choose an evidence file</strong>
+            <span>Click here to browse your device</span>
+            <input type="file" id="registerFile">
+          </label>
+
+          <div class="file-note"><span>ⓘ</span> The file is hashed in your browser. The contract stores its hash, not the file itself.</div>
+
+          <button id="registerButton" class="action-button register-button" type="button">
+            <span>＋</span> Register on Blockchain
+          </button>
+        </article>
+
+        <!-- VERIFY CARD -->
+        <article id="verify" class="glass-card action-card">
+          <div class="card-heading">
+            <div class="large-card-icon verify-icon">✓</div>
+            <div>
+              <span class="card-label">STEP 02</span>
+              <h3>Verify Evidence</h3>
+              <p>Check if the selected file has a registered hash.</p>
+            </div>
+          </div>
+
+          <div class="process-line">
+            <span class="process-number">2</span>
+            <div><strong>Select a file to verify</strong><p>Use the original file or a file you want to check.</p></div>
+          </div>
+
+          <label class="upload-area verify-upload" for="verifyFile">
+            <span class="upload-icon">⌕</span>
+            <strong>Choose a file to verify</strong>
+            <span>Click here to browse your device</span>
+            <input type="file" id="verifyFile">
+          </label>
+
+          <div class="file-note"><span>ⓘ</span> Even a small change to a file usually creates a different SHA-256 hash.</div>
+
+          <button id="verifyButton" class="action-button verify-button" type="button">
+            <span>✓</span> Verify Integrity
+          </button>
+        </article>
+      </section>
+
+      <!-- STATUS / RESULT -->
+      <section class="glass-card result-panel">
+        <div class="result-heading">
+          <div class="result-icon">⌁</div>
+          <div>
+            <span class="card-label">LIVE FEEDBACK</span>
+            <h3>Activity & Verification Result</h3>
+          </div>
+        </div>
+
+        <div id="status" class="status-message" role="status" aria-live="polite">
+          <span class="status-indicator"></span>
+          Connect your wallet to begin registering or verifying evidence.
+        </div>
+      </section>
+
+      <!-- NETWORK -->
+      <section id="network" class="glass-card network-panel">
+        <div class="network-info">
+          <div class="network-emblem">⬡</div>
+          <div>
+            <span class="card-label">SMART CONTRACT NETWORK</span>
+            <h3>Ethereum Sepolia</h3>
+            <p>Digital Evidence Integrity smart contract</p>
+          </div>
+        </div>
+
+        <div class="network-details">
+          <div><span>Network</span><strong><span class="network-dot"></span> Sepolia Testnet</strong></div>
+          <div><span>Chain ID</span><strong>11155111</strong></div>
+          <div><span>Contract</span><strong class="contract-address">0x0fF8b9411EDA054B86751F0AbDaDB4325CE4365B</strong></div>
+        </div>
+
+        <a
+          class="explorer-link"
+          href="https://sepolia.etherscan.io/address/0x0fF8b9411EDA054B86751F0AbDaDB4325CE4365B"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View Contract on Etherscan ↗</a>
+      </section>
+
+      <footer class="footer">
+        <span>EvidenceChain <span class="footer-dot">◆</span> Digital Evidence Integrity</span>
+        <span>Educational DApp · Sepolia Testnet</span>
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>

@@ -146,11 +146,11 @@ The application was tested using a sample file named `evidence.txt`.
 
 These tests demonstrate that even a small modification to a file produces a different SHA-256 hash.
 
-## 10. Application Screenshot
+## 10. Application Screenshots
 
 ### 1. Home Page
 
-![Digital Evidence Integrity Home Page](screenshots/HOME%20PAGE.png)
+![Digital Evidence Integrity Home Page](screenshots/HOME%20PAGE%20.png)
 
 ### 2. Dashboard
 
@@ -158,7 +158,9 @@ These tests demonstrate that even a small modification to a file produces a diff
 
 ### 3. Evidence Registration and Verification Page
 
-![Evidence Registration and Verification](screenshots/Register%20%26%20Verification%20page.png)
+![Evidence Registration and Verification](screenshots/Register%20%26Verification%20page.png)
+
+
 
 
 ## 11. Advantages
